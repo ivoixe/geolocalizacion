@@ -1,7 +1,7 @@
 <widget xmlns="http://www.w3.org/ns/widgets" xmlns:gap="http://phonegap.com/ns/1.0" id="com.prisma.geolocalizacion" version="1.0.0">
   <name>com.prisma.geolocalizacion</name>
-  <description>Hello World sample application that responds to the deviceready event.</description>
-  <author href="http://phonegap.com" email="support@phonegap.com">PhoneGap Team</author>
+  <description>Geolocalizacion</description>
+  <author href="http://phonegap.com" email="support@phonegap.com">Prisma</author>
   <content src="index.html"/>
   <preference name="permissions" value="none"/>
   <preference name="orientation" value="default"/>
@@ -19,10 +19,7 @@
   <preference name="android-minSdkVersion" value="14"/>
   <preference name="android-installLocation" value="auto"/>
   <gap:plugin name="org.apache.cordova.battery-status"/>
-  <gap:plugin name="org.apache.cordova.camera"/>
-  <gap:plugin name="org.apache.cordova.media-capture"/>
   <gap:plugin name="org.apache.cordova.console"/>
-  <gap:plugin name="org.apache.cordova.contacts"/>
   <gap:plugin name="org.apache.cordova.device"/>
   <gap:plugin name="org.apache.cordova.device-motion"/>
   <gap:plugin name="org.apache.cordova.device-orientation"/>
@@ -36,6 +33,18 @@
   <gap:plugin name="org.apache.cordova.network-information"/>
   <gap:plugin name="org.apache.cordova.splashscreen"/>
   <gap:plugin name="org.apache.cordova.vibration"/>
+  <!--todo-->
+    <plugin name="Geolocation" value="org.apache.cordova.GeoBroker" />
+ <!--blackberry-->
+	<plugin name="Geolocation" value="org.apache.cordova.geolocation.Geolocation" />
+  <!--ios-->
+	<plugin name="Geolocation" value="CDVLocation" />
+ <!--windows phone-->
+	<Capabilities>
+		<Capability Name="ID_CAP_LOCATION" />
+	</Capabilities>
+
+
   <icon src="icon.png"/>
   <icon src="www/res/icon/android/icon-36-ldpi.png" gap:platform="android" gap:qualifier="ldpi"/>
   <icon src="www/res/icon/android/icon-48-mdpi.png" gap:platform="android" gap:qualifier="mdpi"/>
@@ -76,4 +85,8 @@
     <allow-intent href="itms:*"/>
     <allow-intent href="itms-apps:*"/>
   </platform>
+  <rim:permissions>
+    <rim:permit>read_geolocation</rim:permit>
+</rim:permissions>
+
 </widget>

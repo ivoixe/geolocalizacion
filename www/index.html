@@ -20,27 +20,118 @@
     under the License.
 -->
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="msapplication-tap-highlight" content="no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>Hello World</title>
-    </head>
-    <body>
-        <div class="app">
-            <h1>PhoneGap</h1>
-            <div id="deviceready" class="blink">
-                <p class="event listening">Connecting to Device</p>
-                <p class="event received">Device is Ready</p>
-            </div>
-        </div>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-    </body>
+  <head>
+    <title>Device Properties Example</title>
+
+    <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
+	
+	    <script src="lib/jquery/jquery.mobile-1.4.5.min.js"></script>
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=true"></script>
+	<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+	<script type="text/javascript" src="lib/gmaps.js"></script> 
+    <script type="text/javascript" charset="utf-8">
+		
+
+		function onSuccess(position) {
+		var element = document.getElementById('geolocation');
+
+			
+			initialize(position.coords.latitude,position.coords.longitude);
+			
+		
+		}
+	function initialize(lat,log) {
+				var geocoder;
+				var map;
+				var infowindow = new google.maps.InfoWindow();	
+				var element = document.getElementById('resultado');
+				var latlng = new google.maps.LatLng(lat,log);
+				var mapOptions = {
+				zoom: 15,
+				center: latlng,
+				mapTypeId: 'roadmap'
+			  }
+			 
+				map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+				geocoder = new google.maps.Geocoder();
+				geocoder.geocode({"latLng": latlng}, function(results, status)
+			{
+				
+				if (status == google.maps.GeocoderStatus.OK)
+				{
+					if (results[0])
+					{
+						dir = "<p><strong>Dirección: </strong>" + results[0].formatted_address + "</p>";
+					}
+					else
+					{
+						dir = "<p>No se ha podido obtener ninguna dirección en esas coordenadas.</p>";
+					}
+				}
+				else
+				{
+					dir = "<p>El Servicio de Codificación Geográfica ha fallado con el siguiente error: " + status + ".</p>";
+				}
+
+				element.innerHTML = "<p>" + dir + '</p>';
+			});
+	
+			    var marker = new google.maps.Marker({
+					position: latlng,
+					map: map,
+					title: 'Hello World!'
+				  });
+
+			  
+			}
+
+	// onError Callback receives a PositionError object
+	//
+	function onError(error) {
+		alert('code: '    + error.code    + '\n' +
+			  'message: ' + error.message + '\n');
+	}
+
+	// Options: throw an error if no update is received every 30 seconds.
+	
+	//
+		//var watchID = navigator.geolocation.watchPosition(onSuccess, onError, {maximumAge: 60000, timeout: 5000, enableHighAccuracy: true }); // esta me mira cada moment0
+		var watchID = navigator.geolocation.getCurrentPosition(onSuccess, onError, {maximumAge: 60000, timeout: 5000, enableHighAccuracy: true }); // esta me mira una vez
+	//var watchID = navigator.geolocation.watchPosition(onSuccess, onError, 500000);
+	 function clearWatch() { alert(watchID);
+        if (watchID != null) {
+            navigator.geolocation.clearWatch(watchID);
+            watchID = null;
+        }
+    }
+	
+	
+
+
+
+    </script>
+	<style>
+	 #map-canvas{
+	   height:200px;
+	   
+	 }
+	</style>
+  </head>
+  <body>
+   
+    <p id="resultado"></p>
+	  <button onclick="clearWatch();">Clear Watch</button>
+	      <div id="map-canvas">
+                                        
+          </div>
+<script>
+
+    
+    
+
+</script>
+  </body>
 </html>
+
+
